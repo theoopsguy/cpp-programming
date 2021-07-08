@@ -21,8 +21,8 @@ void toh(int disk, int tower1id, int tower2id, int tower3id)
     toh (disk-1, tower3id, tower2id, tower1id);
 }
 
-int  main() {
-
+int  main() 
+{
     int disks, tower1, tower2, tower3;
 
     cin>>disks;
@@ -37,4 +37,4 @@ int  main() {
     toh(disks, tower1, tower2, tower3);
 
     return 0;
-  }
+}
