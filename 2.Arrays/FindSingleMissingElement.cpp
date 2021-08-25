@@ -2,6 +2,10 @@
 using namespace std;
 
 //assuming array is sorted
+/*
+if elements are from 1, another approach can be to find sum of n natural nos. and the diff of this sum with
+the sum of all elements of the array is the missing element.
+*/
 
 int minEle(int arr[], int size)
 {

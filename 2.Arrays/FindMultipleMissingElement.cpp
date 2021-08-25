@@ -2,7 +2,13 @@
 using namespace std;
 
 //assuming array is sorted
-
+/*
+can also use a seive like approach like marking all the indices of a second array (of size-the maximum 
+element in primary array) corresponding to the elements present in the primary array and then the unmarked 
+elements of the secondary array will be the ones missing.
+This approach is a rudimentary form of hashing/bitset.
+for this array need not be sorted
+*/
 int minEle(int arr[], int size)
 {
     int m = arr[0];
