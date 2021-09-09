@@ -25,6 +25,7 @@ public:
     void InsertLast (int x);
     int Delete (int idx);
     int Length();
+    void Reverse();
 };
 
 LinkedList :: LinkedList(int arr[], int n)
@@ -167,38 +168,27 @@ int LinkedList::Length ()
     return l;
 }
 
+void LinkedList::Reverse()
+{
+    Node *p = first, *q = NULL, *r = NULL;
+
+    while (p != NULL)
+    {
+        r = q;
+        q = p;
+        p = p->next;
+        q->next = r;
+    }
+
+    first = q;
+}
+
 int main()
 {
-    /*
     int arr[] = {1, 2, 3, 4, 5};
     LinkedList l(arr, 5);
-
+    l.Reverse();
     l.Display();
-    */
-
-    //  OR
-
-    LinkedList l;
-
-    l.Insert(0, 10);
-    l.Insert(1, 20);
-    l.Insert(0, 5);
-    l.Insert(2, 30);
-
-    l.Display();
-
-    //  OR
-
-    /*
-    LinkedList l;
-    
-    l.InsertLast(10);
-    l.InsertLast(20);
-    l.InsertLast(30);
-    l.InsertLast(40);
-
-    l.Display();
-    */
 
     return 0;
 }
