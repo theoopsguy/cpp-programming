@@ -186,10 +186,10 @@ bool LinkedList::isLoop()
     {
         p = p->next;
         q = q->next;
-        q = q != NULL? q->next : NULL;
+        q = q != NULL? q->next : NULL;  //using two pointers which are sliding at different speeds.
     } while (p != NULL && q != NULL && p != q);
     
-    if (p == q)
+    if (p == q)     //if there is a loop in ll, both pointers will coincide at some instance.
         return true;
     else
         return false;
