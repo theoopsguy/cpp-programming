@@ -1,204 +1,102 @@
 #include <iostream>
 using namespace std;
 
-class Node
+class Node 
 {
 public:
     int data;
     Node *next;
+
+    Node (int data)
+    {
+        this->data = data;
+        next = NULL;
+    }
 };
 
-class LinkedList
+void print (Node *head)
 {
-private:
-    Node *first, *last;
-public:
-    LinkedList()
-    {
-        first = NULL;
-        last = NULL;
-    }
-    LinkedList(int arr[], int n);
-    ~LinkedList();
-    void Display();
-    void Insert (int idx, int x);
-    void InsertLast (int x);
-    int Delete (int idx);
-    int Length();
-};
+    Node *temp = head;
 
-LinkedList :: LinkedList(int arr[], int n)
-{
-    Node *temp;
-    first = new Node;
-    first->data = arr[0];
-    first->next = NULL;
-    last = first;
-
-    for (int idx = 1; idx < n; idx++)
-    {
-        temp = new Node;
-        temp->data = arr[idx];
-        temp->next = NULL;
-        last->next = temp;
-        last = temp;
-    }
-}
-
-LinkedList :: ~LinkedList()
-{
-    Node *temp = first;
-
-    while (first)
-    {
-        first = first->next;
-        delete temp;
-        temp = first;
-    }
-
-    last = first;
-}
-
-void LinkedList::Display()
-{
-    Node *temp = first;
-
-    while (temp != NULL)
+    while (temp)
     {
         cout<<temp->data<<" ";
         temp = temp->next;
     }
-    cout<<endl;
 }
 
-void LinkedList::Insert (int idx, int x)
+Node *takeInput()
 {
-    Node *temp = first, *n;
+    int data;
+    cin>>data;
+    Node *head = NULL, *tail = head;
+    while (data != -1)
+    {
+        Node *newNode = new Node (data);
+        
+        if (head == NULL)
+        {
+            head = newNode;
+            tail = head;
+        }
 
-    if (idx < 0 || idx > Length())
+        else 
+        {
+            tail->next = newNode; 
+            tail = newNode;
+        }
+
+        cin >> data;
+    }
+    return head;
+}
+
+int length(Node *head)
+{
+    int l = 0;
+    Node *temp = head;
+    while (temp)
+    {
+        temp = temp->next;
+        l++;
+    }
+    return l;
+}
+
+void Insert(Node *head, int idx, int x)
+{
+    Node *ptr = head;
+    
+    if (idx < 0 || idx > length(head))
         return;
 
-    n = new Node;
-    n->data = x;
-    n->next = NULL;
+    Node *newNode = new Node (x);
 
     if (idx == 0)
     {
-        n->next = first;
-        first = n;
+        newNode->next = head;
+        head = newNode;
     }
-    else
+
+    for (int pos = 0; pos < idx - 1 && ptr != NULL; pos++)
     {
-        for (int pos = 0; pos < idx-1; pos++)
-            temp = temp->next;
-
-        if (temp->next == NULL)
-            last = n;
-
-        n->next = temp->next;
-        temp->next = n;
+        ptr = ptr->next;
     }
-}
 
-void LinkedList::InsertLast (int x)
-{
-    Node *n = new Node;
-    n->data = x;
-
-    if (first == NULL)
+    if (ptr)
     {
-        first = n;
-        last = n;
+        newNode->next = ptr->next;
+        ptr->next = newNode;
     }
-
-    else
-    {
-        last->next = n;
-        last = n;
-    }
-}
-
-int LinkedList::Delete (int idx)
-{
-    Node *temp = first;
-    int x;
-
-    if (idx < 0 || idx > Length())
-        return -1;
-
-    if(idx == 0)
-    {
-        temp = first;
-        first = first->next;
-        x = temp->data;
-        delete temp;
-    }
-
-    else
-    {
-        for (int pos = 0; pos < idx - 1; pos++)
-            temp = temp->next;
-        //if idx 2 is to be deleted, after loop ends temp will point to 1.
-        Node *del = temp->next; //del points to 2 (to be deleted)
-        Node *n = del->next;    //n points to ele after 2 i.e. 3 (to be linked with 1 after deletion)
-        x = del->data;
-        
-        if (del->next == NULL)
-            last = temp;    //if the node to be deleted is the last node
-
-        delete del;
-        temp->next = n;
-    }
-
-    return x;
-}
-
-int LinkedList::Length ()
-{
-    int l = 0;
-    Node *temp = first;
-
-    while (temp != NULL)
-    {
-        l++;
-        temp = temp->next;
-    }
-
-    return l;
 }
 
 int main()
 {
-    /*
-    int arr[] = {1, 2, 3, 4, 5};
-    LinkedList l(arr, 5);
-
-    l.Display();
-    */
-
-    //  OR
-
-    LinkedList l;
-
-    l.Insert(0, 10);
-    l.Insert(1, 20);
-    l.Insert(0, 5);
-    l.Insert(2, 30);
-
-    l.Display();
-
-    //  OR
-
-    /*
-    LinkedList l;
-    
-    l.InsertLast(10);
-    l.InsertLast(20);
-    l.InsertLast(30);
-    l.InsertLast(40);
-
-    l.Display();
-    */
+    Node *head = takeInput();
+    int idx, data;
+    cin>>idx>>data;
+    Insert (head, idx, data);
+    print(head);
 
     return 0;
 }
