@@ -104,6 +104,7 @@ void LinkedList::InsertLast (int x)
 {
     Node *n = new Node;
     n->data = x;
+    n->next = NULL;
 
     if (first == NULL)
     {
