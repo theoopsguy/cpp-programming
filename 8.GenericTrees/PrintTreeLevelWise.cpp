@@ -16,26 +16,31 @@ public:
     }
 };
 
-void printTree(TreeNode<int> *root)
+void printTreeLevelWise(TreeNode<int> *root)
 {
     if (root == NULL)
         return;     
     /*would work fine even without this base case, this is just to handle the edge case when NULL is passed to the function.*/ 
 
-    cout << root->data << ": ";
+    queue<TreeNode<int>*> pendingNodes;
+    pendingNodes.push(root);
 
-    for (int chidx = 0; chidx < root->children.size(); chidx++)
+    while (!pendingNodes.empty())
     {
-        cout<<root->children[chidx]->data;
-        if (chidx != root->children.size() - 1)
-        cout<<", ";
-    }
+        cout << pendingNodes.front()->data << ": ";
 
-    cout<<endl;
+        for (int chidx = 0; chidx < pendingNodes.front()->children.size(); chidx++)
+        {
+            cout<<pendingNodes.front()->children[chidx]->data;
 
-    for (int idx = 0; idx < root->children.size(); idx++)
-    {
-        printTree(root->children[idx]);
+            if (chidx != root->children.size() - 1)
+                cout<<", ";
+                
+            pendingNodes.push(pendingNodes.front()->children[chidx]);
+        }
+
+        cout<<endl;
+        pendingNodes.pop();
     }
 }
 
@@ -76,13 +81,12 @@ int main()
 {
     TreeNode<int> *root = takeInputLevelWise();
 
-    printTree(root);
+    printTreeLevelWise(root);
 
     return 0;
 }
 /*
 Sample Input:
-
 Enter root data:
 1
 Enter no. of children of 1
@@ -110,9 +114,9 @@ Enter no. of children of 6
 
 Corresponding Output:
 1: 2, 3, 4
-2: 5, 6
-5:
-6:
+2: 5, 6,
 3:
 4:
+5:
+6:
 */
