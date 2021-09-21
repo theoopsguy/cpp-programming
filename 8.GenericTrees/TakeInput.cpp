@@ -13,6 +13,14 @@ public:
     {
         this->data = data;
     }
+
+    ~TreeNode()
+    {
+        for (int chidx = 0; chidx < children.size(); chidx++)
+        {
+            delete children[chidx];
+        }
+    }
 };
 
 void printTree(TreeNode<int> *root)
@@ -63,6 +71,8 @@ int main()
     TreeNode<int> *root = takeInput();
 
     printTree(root);
+
+    delete root;
 
     return 0;
 }
