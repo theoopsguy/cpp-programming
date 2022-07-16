@@ -19,7 +19,7 @@ public:
                 st.push(node->right);
             if (node->left)
                 st.push(node->left);
-            ans.push(node->val);
+            ans.push_back(node->val);
         }
         return ans;
     }
